@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <arpa/inet.h>
 
 /*
  *
@@ -73,13 +74,13 @@ Message *msg_decode(uint8_t *serialized_msg, size_t serialized_length) {
     
     size_t expected_length = HEADER_LENGTH + msg->length;
     if(expected_length != serialized_length) {
-        destroy_msg(msg);
+        msg_destroy(msg);
         return NULL;
     }
 
     msg->payload = calloc(1, msg->length);
-    if(msg->payload) {
-        destroy_msg(msg);
+    if(msg->payload == NULL) {
+        msg_destroy(msg);
         return NULL;
     }
     memcpy(msg->payload, serialized_msg+HEADER_LENGTH, msg->length);

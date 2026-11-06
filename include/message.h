@@ -20,7 +20,7 @@ typedef struct Message {
     uint8_t type;
     uint32_t length;
     uint8_t *payload;
-}
+} Message;
 
 Message *msg_create(MessageType type, uint32_t length, uint8_t *payload);
 void msg_destroy(Message *msg);
